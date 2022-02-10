@@ -5,7 +5,7 @@ namespace Controllers;
 class Home extends AbstractController
 {
 
-    protected $defaultModelName = \Models\Home::class;
+    protected $defaultModelName = \Models\Home::class ;
 
 
     /**
@@ -24,7 +24,7 @@ class Home extends AbstractController
      */
     public function index()
     {
-
+        
         // si besoin d'interagir avec la BDD, on peut utiliser le modele par defaut
         //du controller, et donc faire une requete sur sa table SQL par defaut
         // directement depuis cette classe : 
@@ -42,17 +42,8 @@ class Home extends AbstractController
 
 
         return $this->render("home/index", [
-            "pageTitle" => "Home Page",
-            // "elements" => $elements
+            "pageTitle"=> "Home Page",
+        // "elements" => $elements
         ]);
-
-
-
-        // Pour creer une methode de type create il faut déclarer les variables null
-        // Faire ensuite les vérifications de type (ctype_digits) puis instancier un new(objet à creer)
-        // en récupérant les valeurs avec les seters.
-        // Appeler la methode de creation avec this default model et lui passer le parametre.
-        // Effectuer un return de la method redirect en précisant le type et l'action.
-        // Effectuer le render en lui renvoyant deux arguments qui sont le chemin et les variables à déployer.
     }
 }

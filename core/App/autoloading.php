@@ -1,9 +1,10 @@
 <?php
 spl_autoload_register(
-    function ($leNomDeLaClasseEnQuestion) {
+    function(  $leNomDeLaClasseEnQuestion )
+    {
 
         $leNomDeLaClasseEnQuestion = str_replace("\\", "/", $leNomDeLaClasseEnQuestion);
 
-        require_once "core/{$leNomDeLaClasseEnQuestion}.php";
+        require_once "core/{$leNomDeLaClasseEnQuestion}.php" ;
     }
 );

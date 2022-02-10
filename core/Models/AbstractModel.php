@@ -1,21 +1,29 @@
 <?php
-
 namespace Models;
 
-require_once "core/Database/PdoMYSQL.php";
+
 
 abstract class AbstractModel
 {
+
     protected string $nomDeLaTable;
+
+
     protected $pdo;
+
     public function __construct()
     {
+
+
         $this->pdo = \Database\PdoMySQL::getPdo();
+
+      
     }
 
     /**
      * 
-     * retourne un tableau contenant TOUS les elements
+     * retourne un tableau contenant TOUS les elements 
+     * tous les champs de la table SQL en question
      * 
      * @return array $elements
      * 
@@ -23,6 +31,7 @@ abstract class AbstractModel
      */
     public function findAll(): array
     {
+
 
 
         $requete = $this->pdo->query("SELECT * FROM {$this->nomDeLaTable}");
@@ -33,9 +42,11 @@ abstract class AbstractModel
     }
 
 
+
+
     /**
      * 
-     * trouver un cocktail par son id
+     * trouver un element par son id
      * renvoie un tableau contenant un element
      * 
      * @param integer $id
@@ -44,6 +55,7 @@ abstract class AbstractModel
      */
     public function findById(int $id)
     {
+
 
         $maRequete = $this->pdo->prepare("SELECT * 
                         FROM {$this->nomDeLaTable} WHERE id = :id");
@@ -55,30 +67,71 @@ abstract class AbstractModel
 
         );
 
-
         $maRequete->setFetchMode(\PDO::FETCH_CLASS, get_class($this));
 
         $element = $maRequete->fetch();
-
+    
         return $element;
+
     }
 
-
-
-
     /**
-     * Supprime un element de la BDD
-     * @param int $id
-     *
+     * 
+     * supprimer un element de la BDD par le biais de son id
+     * 
+     * @param object $objetDUneClasse
+     * @return void
+     * 
      * 
      */
-    public function remove(int $id): void
+    public function remove($objetDUneClasse): void
     {
 
 
-        $maRequeteDelete = $this->pdo->prepare("DELETE FROM {$this->nomDeLaTable} WHERE id = :id");
-        $maRequeteDelete->execute([
-            "id" => $id
+
+        $requeteSuppression = $this->pdo->prepare("DELETE FROM {$this->nomDeLaTable} WHERE id = :id");
+
+        $requeteSuppression->execute([
+            "id" => $objetDUneClasse->getId()
         ]);
     }
+
+
+
+
+
 }
+
+
+
+
+/* 
+
+    ajouter une page avec des infos
+            une info : 
+
+                    -id
+                    -description   (texte d'information)
+
+            -afficher toutes les infos
+            -supprimer une info
+            -creer une info    (formulaire sur template séparé)
+
+
+
+    ajouter les sandwiches
+
+            un sandwich : 
+                            -id
+                            -description   (texte)
+                            -prix int
+
+            -afficher tous les sandwiches
+            -afficher un sandwich
+            -supprimer un sandwich
+            -creer un sandwich
+
+
+
+
+*/
